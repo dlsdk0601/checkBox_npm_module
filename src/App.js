@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import useCheckBox from "./hooks/CheckBox";
-import { useRef, useState } from "react";
+// import useCheckBox from "./hooks/CheckBox";
+import useClick from "./hooks/CheckBox";
+import { useEffect, useRef, useState } from "react";
 
 function App() {
   const checkObj = {
@@ -14,23 +15,17 @@ function App() {
     length: 2,
   };
   // const [all, checkArr, checkHandle] = useCheckBox(checkObj);
-  const aaa = useCheckBox(checkObj);
-  const bbb = useCheckBox(bbbb);
-
-  console.log("aaa===");
-  console.log(aaa);
-  console.log(bbb);
-  console.log("aaa===");
-  console.log(aaa);
+  const [aaa, onClick] = useClick(checkObj);
 
   return (
     <Wrapper>
-      {/* <Form>
+      <Form>
         <Label name="input1">
           <input
-            checked={all}
-            onClick={checkHandle}
+            ref={(el) => (aaa.current[0] = el)}
+            onClick={onClick}
             data-index={-1}
+            id={1}
             name="input1"
             type="checkbox"
             value="전체동의"
@@ -39,10 +34,10 @@ function App() {
         </Label>
         <Label name="input2">
           <input
-            checked={checkArr[0]}
-            onClick={checkHandle}
+            ref={(el) => (aaa.current[1] = el)}
             name="input2"
-            data-index={0}
+            onClick={onClick}
+            id={1}
             type="checkbox"
             value="동의1"
           />{" "}
@@ -50,10 +45,10 @@ function App() {
         </Label>
         <Label name="input3">
           <input
-            checked={checkArr[1]}
-            onClick={checkHandle}
+            ref={(el) => (aaa.current[2] = el)}
             name="input3"
-            data-index={1}
+            onClick={onClick}
+            id={1}
             type="checkbox"
             value="동의2"
           />{" "}
@@ -61,16 +56,16 @@ function App() {
         </Label>
         <Label name="input4">
           <input
-            checked={checkArr[2]}
-            onClick={checkHandle}
-            data-index={2}
+            ref={(el) => (aaa.current[3] = el)}
+            id={1}
+            onClick={onClick}
             name="input4"
             type="checkbox"
             value="동의3"
           />{" "}
           동의3
         </Label>
-      </Form> */}
+      </Form>
     </Wrapper>
   );
 }
