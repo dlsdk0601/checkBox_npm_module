@@ -2,30 +2,29 @@ import styled from "styled-components";
 // import useCheckBox from "./hooks/CheckBox";
 import useClick from "./hooks/CheckBox";
 import { useEffect, useRef, useState } from "react";
+import useTest from "./hooks/CheckBox";
 
 function App() {
   const checkObj = {
-    id: 1,
+    id: "first",
     isAll: true,
-    length: 3,
+    length: 4,
   };
   const bbbb = {
-    id: 2,
+    id: "second",
     isAll: true,
-    length: 2,
+    length: 4,
   };
-  // const [all, checkArr, checkHandle] = useCheckBox(checkObj);
-  const [aaa, onClick] = useClick(checkObj);
+  const aaa = useTest(checkObj);
+  const bbb = useTest(bbbb);
 
   return (
     <Wrapper>
       <Form>
         <Label name="input1">
           <input
-            ref={(el) => (aaa.current[0] = el)}
-            onClick={onClick}
-            data-index={-1}
-            id={1}
+            {...aaa}
+            data-index={0}
             name="input1"
             type="checkbox"
             value="전체동의"
@@ -34,10 +33,9 @@ function App() {
         </Label>
         <Label name="input2">
           <input
-            ref={(el) => (aaa.current[1] = el)}
+            {...aaa}
+            data-index={1}
             name="input2"
-            onClick={onClick}
-            id={1}
             type="checkbox"
             value="동의1"
           />{" "}
@@ -45,10 +43,9 @@ function App() {
         </Label>
         <Label name="input3">
           <input
-            ref={(el) => (aaa.current[2] = el)}
+            {...aaa}
+            data-index={2}
             name="input3"
-            onClick={onClick}
-            id={1}
             type="checkbox"
             value="동의2"
           />{" "}
@@ -56,9 +53,50 @@ function App() {
         </Label>
         <Label name="input4">
           <input
-            ref={(el) => (aaa.current[3] = el)}
-            id={1}
-            onClick={onClick}
+            {...aaa}
+            data-index={3}
+            name="input4"
+            type="checkbox"
+            value="동의3"
+          />{" "}
+          동의3
+        </Label>
+      </Form>
+      <Form>
+        <Label name="input1">
+          <input
+            {...bbb}
+            data-index={0}
+            name="input1"
+            type="checkbox"
+            value="전체동의"
+          />
+          전체동의
+        </Label>
+        <Label name="input2">
+          <input
+            {...bbb}
+            data-index={1}
+            name="input2"
+            type="checkbox"
+            value="동의1"
+          />{" "}
+          동의1
+        </Label>
+        <Label name="input3">
+          <input
+            {...bbb}
+            data-index={2}
+            name="input3"
+            type="checkbox"
+            value="동의2"
+          />{" "}
+          동의2
+        </Label>
+        <Label name="input4">
+          <input
+            {...bbb}
+            data-index={3}
             name="input4"
             type="checkbox"
             value="동의3"
