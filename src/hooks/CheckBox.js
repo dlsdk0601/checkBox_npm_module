@@ -118,11 +118,16 @@ const arr = [];
 // }
 
 export default function useTest(checkObj) {
+  const inputEl = useRef([]);
+
   const [checkArr, setCheckArr] = useState({});
   const { id, isAll, length } = checkObj;
   const [all, setAll] = useState(false);
 
-  console.log(checkArr);
+  // console.log("checkArr===");
+  // console.log(checkArr);
+  // console.log("all===");
+  // console.log(all);
   //첫 배열 전부 false 때리기
   useEffect(() => {
     setCheckArr((prev) => {
@@ -137,8 +142,25 @@ export default function useTest(checkObj) {
     });
   }, []);
 
+  useEffect(() => {
+    if (isAll) {
+      setCheckArr((prev) => {
+        const oldArr = [...prev[id]];
+        const newArr = oldArr.map((item, index) =>
+          index === 0 ? !item : item
+        );
+
+        const obj = {
+          ...prev,
+          [id]: newArr,
+        };
+        localStorage.setItem("checkBox", JSON.stringify(obj));
+        return obj;
+      });
+    }
+  }, [isAll]);
+
   const onClick = (e) => {
-    console.log("click");
     const {
       target: { checked },
     } = e;
@@ -148,39 +170,73 @@ export default function useTest(checkObj) {
       },
     } = e;
 
-    if (checked) {
-      let isAll = true;
-      setCheckArr((prev) => {
-        const oldArr = [...prev[id]];
-        const newArr = oldArr.map((item, index) => {
-          let res;
+    let isAll = true;
+    setCheckArr((prev) => {
+      const oldArr = [...prev[id]];
+      const newArr = oldArr.map((item, index) => {
+        let res;
 
-          if (index === +dataNum) {
-            res = !item;
-          } else {
-            res = item;
-          }
+        if (index === +dataNum) {
+          res = !item;
+        } else {
+          res = item;
+        }
+
+        if (index !== 0) {
           isAll = isAll && res;
-          return res;
-        });
+        }
 
-        const obj = {
-          ...prev,
-          [id]: newArr,
-        };
-        localStorage.setItem("checkBox", JSON.stringify(obj));
-        return obj;
+        return res;
       });
-    } else {
+
+      setAll((prev) => isAll);
+
+      const obj = {
+        ...prev,
+        [id]: newArr,
+      };
+      localStorage.setItem("checkBox", JSON.stringify(obj));
+      return obj;
+    });
+  };
+
+  const ref = (el) => {
+    // console.log("el==");
+    // console.log(el);
+    // if (el) {
+    //   const index = +el.dataset.index;
+    //   const name = el.name;
+    //   const objectkeys = Object.keys(checkArr);
+    //   const length = objectkeys.length;
+    //   let num = 0;
+
+    //   for (let i = 0; i < length; i++) {
+    //     if (index === 0 && typeof el !== "number" && objectkeys[i] === name) {
+    //       console.log("el==");
+    //       console.log(el);
+    //       console.log("num===");
+    //       console.log(num);
+    //       inputEl.current.push(el);
+    //       // num++;
+    //     }
+    //   }
+    // }
+    if (el) {
+
+      // 여기서 부터 다시 시작
+      const old = localStorage.getItem("inputEl") || "[]";
+      const jsonOld = JSON.parse(old);
+      const arr = [...jsonOld];
+      arr.push(el);
+      localStorage.setItem("inputEl", JSON.stringify(arr));
+      return (inputEl.current = arr);
     }
   };
-
-  const checked = () => {
-    console.log("ddd");
-  };
+  console.log(inputEl.current);
 
   return {
     onClick,
     id,
+    ref,
   };
 }

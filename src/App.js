@@ -6,12 +6,12 @@ import useTest from "./hooks/CheckBox";
 
 function App() {
   const checkObj = {
-    id: "first",
+    id: "input1",
     isAll: true,
     length: 4,
   };
   const bbbb = {
-    id: "second",
+    id: "input2",
     isAll: true,
     length: 4,
   };
